@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Acunu Trial Instance</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        {% if pending %}
+        <meta http-equiv="refresh" content="10">
+        {% endif %}
+    </head>
+    <body>
+        <div class="container">
+            <h1>Acunu Trial Instance</h1>
+    
+            {% if pending %}
+            <h3>Pending Instances</h3>
+            
+            <p>Please wait whilst these instances are started for you.  This page will refresh automatically.</p>
+            
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th>Instance ID</th><th>Status</th>
+                </thead>
+                <tbody>
+                    {% for instance in pending %}
+                    <tr><td>{{ instance.id }}</td><td>{{ instance.state }}</td>
+                    {% endfor %}
+                </tbody>
+            <table>
+            {% endif %}
+            
+            {% if running %}
+            <h3>Running Instances</h3>
+        
+            <p>To access the web UI for these instances, you first need to ssh and set the password 
+               (please use a strong password!).  To do this, you will need the <a href="static/private-key.pem">
+               private key</a> </p>
+            
+            <p>If you are using Linux or Mac OS X, follow these instruction to change the password:</p>
+            
+            <pre class="prettyprint linenums">
+chmod og-rwx ~/Downloads/private-key.pem
+ssh -i ~/Downloads/private-key.pem root@{{ running.0.address }}
+passwd</pre>
+
+            <p>If you are using Windows, you have two options for ssh access to these VMs:</p>
+            
+            <ul>
+                <li>Use <a target="_blank" href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTY</a> 
+                    - click here for <a target="_blank" href="http://docs.amazonwebservices.com/AmazonEC2/gsg/2006-06-26/putty.html">more 
+                    instructions on using PuTTY and Private</a>.
+                <li>Use <a target="_blank" href="http://www.cygwin.com/">Cygwin</a> and ssh (harder)</li>
+            </ul>
+
+            <p>Once you have changed the password, you can access the Web UI of the following
+               instances using the links below.  You may see a security error when clicking the
+               links, as the images used self signed certificates.</p>
+            
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th>Instance ID</th><th>URL</th><!--<th>Actions</th>-->
+                </thead>
+                <tbody>
+                    {% for instance in running %}
+                    <tr>
+                        <td>{{ instance.id }}</td><td><a target="_blank" href="https://{{ instance.address }}">{{ instance.address }}</a></td>
+                        <!--<td><a class="btn btn-small btn-danger" href="#"><i class="icon-trash icon-white"></i> Terminate</a></td>-->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            <table>
+            {% endif %}
+        </div>
+    </body>
+</html>

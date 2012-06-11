@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Acunu Trial Instance</title>
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Acunu Trial Instance</h1>
+        
+            <p>With this service you can self-provision some Acunu Data Platform VMs on 
+            Amazon EC2.  You will be limited to one set of VMs per email address.</p>
+    
+            <p>If you have any problems with this service, please <a href="mailto:support@acunu.com">
+                email Acunu support</a></p>
+    
+            <p>Please enter your details to get access to some Acunu Trial instances:</p>
+            
+            <div class="well">
+            <form class="form-horizontal" method="POST" action="/instances">
+                <input type="hidden" name="mode" value="request">
+                <fieldset>
+                    <div class="control-group {% if name_error %} error {% endif %}">
+                        <label class="control-label" for="first-name">First Name</label>
+                        <div class="controls">
+                            <input type="text" name="first-name" id="first-name" class="input-xlarge" value="{{ first_name }}"/>
+                            {% if name_error %}
+                                <p class="help-block">{{ name_error }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="last-name">Last Name</label>
+                        <div class="controls"><input type="text" name="last-name" id="last-name" class="input-xlarge" value="{{ last_name }}"/></div>
+                    </div>
+                    <div class="control-group {% if email_error %} error {% endif %}">
+                         <label class="control-label" for="email">Email</label>
+                         <div class="controls">
+                            <input type="text" name="email" id="email" class="input-xlarge" value="{{ email }}"/>
+                            {% if email_error %}
+                                <p class="help-block">{{ email_error }}</p>
+                            {% else %}
+                                <p class="help-block">(Required - we will email you the link!)</p>
+                            {% endif %}
+                         </div>
+                     </div>
+                    <div class="control-group">
+                        <label class="control-label" for="company">Company</label>
+                        <div class="controls">
+                            <input type="text" name="company" id="company" class="input-xlarge" value="{{ company }}"/>
+                            <p class="help-block">(Optional)</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="phone">Phone</label>
+                        <div class="controls">
+                            <input type="text" name="phone" id="phone" class="input-xlarge" value="{{ phone }}"/>
+                            <p class="help-block">(Optional)</p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for=""></label>
+                        <div class="controls">
+                            {{ chtml }}
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Get My Instances!</button>
+                    <button class="btn">Cancel</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </body>
+</html>

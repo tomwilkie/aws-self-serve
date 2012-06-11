@@ -1,0 +1,24 @@
+application: acunu-selfserve
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /instances
+  script: instances.py
+  
+- url: /css
+  static_dir: css
+  
+- url: /img
+  static_dir: img
+
+- url: /js
+  static_dir: js
+
+- url: /static
+  static_dir: static
+
+builtins:
+- datastore_admin: on
+- remote_api: on

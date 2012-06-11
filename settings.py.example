@@ -1,0 +1,24 @@
+#
+# Settings file for AWS self service portal
+# Fill in the details in this file and rename it to settings.py
+#
+
+# We use recaptcha to stop bots - go sign up
+RECAPTCHA_PUBLIC=""
+RECAPTCHA_PRIVATE=""
+
+# We use this to salt the email hashes
+SALT = ""
+
+# Access keys for the AWS API 
+ACCESS_KEY = ""
+SECRET_KEY = ""
+
+# Where do you want to deploy the AMI?
+REGION = ""
+
+# What AMI would you like to doll out?
+AMI_ID = ""
+
+# How many instances per user?
+INSTANCES = 1
