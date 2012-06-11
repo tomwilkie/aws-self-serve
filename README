@@ -1,0 +1,13 @@
+This is a self-provisioning portal for AWS.  It allows
+users to provision their own VMs on your account on EC2,
+without your intervention.  It should be useful for giving
+training sessions and tutorials.
+
+To get started, you will need:
+* A Google App Engine account (this is an app engine application)
+* An AWS account
+* An AMI you wish to provision
+* A recaptcha account
+
+You need to put your details into settings.py, upload to app
+engine and go!
