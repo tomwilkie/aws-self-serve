@@ -11,6 +11,32 @@ from google.appengine.ext.webapp import template
 from django.core.validators import email_re
 from settings import *
 
+# We store the user's details (email etc) and the AWS reservation id in google's
+# appengine datastore.  This is the only state store server-side.
+#
+# When a user signs up, we create this record, but don't doing anything in AWS yet. (see initial_request())
+# We send them an email, with a link (and token) in it.  When the click the link in the email,
+# we lookup the record in the datastore (by token) and if there is no reservation (which there won't
+# be) we create some VMs for them (see line 147).  If there is a reservation, we just get
+# the state of those VMs (provisioning, running etc).  The page we serve is set to periodically
+# refresh so when they first go to it it will say "provisioning", but should soon refresh to "running".
+# When the VM is running we give them a whole bunch of helpful links (ssh keys, putty, addresses etc)
+#
+# All VMs created with this system use the same keys, so users could access each other VMs if they wanted
+# (they would need to guess the ip addresses).  We offer the public half of the ssh key for download.
+#
+# When you use this, make sure you don't leave the VMs running for too long, as they can get hacked
+# and owned by someone else.  Also, make sure to log into the appengine management console (http://appengine.appspot.com)
+# and send the list of emails etc to bart/konrad/dai for marketing.  Otherwise, whats the point?
+#
+# NB there is no limit to the number of vms this thing will provision, so use wisely (ie not at a 
+# conference when the link will get tweeted!)
+#
+# TODO
+# - invitation codes, with different AMIs & instance limits
+# - per-user ssh keys
+# - automatic AMI deletion after timeout
+
 class InstanceUser(db.Model):
     first_name = db.StringProperty()
     last_name = db.StringProperty()
